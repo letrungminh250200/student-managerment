@@ -6,7 +6,7 @@
     <Container fluid>
         <Row>
             <Col sm={6}>
-                {new Date().getFullYear()} © Velzon.
+                {new Date().getFullYear()} © Minh Le.
             </Col>
             <Col sm={6}>
                 <div class="text-sm-end d-none d-sm-block">

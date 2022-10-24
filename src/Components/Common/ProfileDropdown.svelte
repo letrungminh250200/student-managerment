@@ -55,7 +55,7 @@
                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"
             /> <span class="align-middle">Settings</span></DropdownItem
         >
-        <DropdownItem href="authenticationInner/login/auth-signin"
+        <DropdownItem href="/authenticationInner/login/auth-signin"
             ><i class="mdi mdi-logout text-muted fs-16 align-middle me-1" />
             <span class="align-middle" data-key="t-logout">Logout</span
             ></DropdownItem

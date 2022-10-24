@@ -55,7 +55,7 @@ const c = [
 	() => import("..\\..\\src\\routes\\landing\\OnePage\\cta.svelte"),
 	() => import("..\\..\\src\\routes\\landing\\OnePage\\faq.svelte"),
 	() => import("..\\..\\src\\routes\\tables\\basictables\\tables-basic.svelte"),
-	() => import("..\\..\\src\\routes\\tables\\gridjs\\tables-gridjs.svelte"),
+	() => import("..\\..\\src\\routes\\tables\\customers.svelte"),
 	() => import("..\\..\\src\\routes\\pages\\pages-coming-soon.svelte"),
 	() => import("..\\..\\src\\routes\\pages\\pages-maintenance.svelte"),
 	() => import("..\\..\\src\\routes\\pages\\profile\\settings\\pages-profile-settings.svelte"),
@@ -227,8 +227,8 @@ export const routes = [
 	// src/routes/tables/basictables/tables-basic.svelte
 	[/^\/tables\/basictables\/tables-basic\/?$/, [c[0], c[55]], [c[1]]],
 
-	// src/routes/tables/gridjs/tables-gridjs.svelte
-	[/^\/tables\/gridjs\/tables-gridjs\/?$/, [c[0], c[56]], [c[1]]],
+	// src/routes/tables/customers.svelte
+	[/^\/tables\/customers\/?$/, [c[0], c[56]], [c[1]]],
 
 	// src/routes/pages/pages-coming-soon.svelte
 	[/^\/pages\/pages-coming-soon\/?$/, [c[0], c[57]], [c[1]]],

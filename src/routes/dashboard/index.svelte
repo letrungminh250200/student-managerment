@@ -1,12 +1,12 @@
 <svelte:head>
-  <title>Projects | Velzon - Svelte Admin & Dashboard Template</title>
+  <title>Student management</title>
 </svelte:head>
 <script>
 	import { Col, Container, Row } from 'sveltestrap';
 
 	import BreadCrumb from '../../Components/Common/BreadCrumb.svelte';
 	import ActiveProjects from './ActiveProjects.svelte';
-	import Chat from './Chat.svelte';
+	// import Chat from './Chat.svelte';
 	import ProjectsOverview from './ProjectsOverview.svelte';
 	import ProjectsStatus from './ProjectsStatus.svelte';
 	import TeamMembers from './TeamMembers.svelte';
@@ -32,7 +32,7 @@
 		</Row>
 		<Row>
 			<TeamMembers teamMembers={data.teamMembers} />
-			<Chat />
+			<!-- <Chat /> -->
 			<ProjectsStatus />
 		</Row>
 	</Container>

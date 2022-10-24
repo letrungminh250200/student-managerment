@@ -170,11 +170,11 @@
 					</DropdownMenu>
 				</Dropdown>
 
-				<LanguageDropdown />
+				<!-- <LanguageDropdown /> -->
 
 				<WebAppsDropdown />
 
-				<MyCartDropdown />
+				<!-- <MyCartDropdown /> -->
 
 				<FullScreenDropdown />
 

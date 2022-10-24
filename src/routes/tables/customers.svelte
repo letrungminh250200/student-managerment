@@ -14,7 +14,7 @@
 		Table,
 		CardHeader
 	} from 'sveltestrap';
-	import BreadCrumb from '../../../Components/Common/BreadCrumb.svelte';
+	import BreadCrumb from '../../Components/Common/BreadCrumb.svelte';
 	import { html } from 'gridjs';
 
 	const data = [
@@ -64,6 +64,58 @@
 		],
 		[
 			'10',
+			'Tyrone',
+			'tyrone@example.com',
+			'Senior Response Liaison',
+			'Raynor, Rolfson and Daugherty',
+			'Qatar'
+		],
+		[
+			'11',
+			'Jonathan',
+			'jonathan@example.com',
+			'Senior Implementation Architect',
+			'Hauck Inc',
+			'Holy See'
+		],
+		['12', 'Harold', 'harold@example.com', 'Forward Creative Coordinator', 'Metz Inc', 'Iran'],
+		[
+			'13',
+			'Shannon',
+			'shannon@example.com',
+			'Legacy Functionality Associate',
+			'Zemlak Group',
+			'South Georgia'
+		],
+		['14', 'Robert', 'robert@example.com', 'Product Accounts Technician', 'Hoeger', 'San Marino'],
+		['15', 'Noel', 'noel@example.com', 'Customer Data Director', 'Howell - Rippin', 'Germany'],
+		[
+			'16',
+			'Traci',
+			'traci@example.com',
+			'Corporate Identity Director',
+			'Koelpin - Goldner',
+			'Vanuatu'
+		],
+		[
+			'17',
+			'Kerry',
+			'kerry@example.com',
+			'Lead Applications Associate',
+			'Feeney, Langworth and Tremblay',
+			'Niger'
+		],
+		['18', 'Patsy', 'patsy@example.com', 'Dynamic Assurance Director', 'Streich Group', 'Niue'],
+		[
+			'19',
+			'Cathy',
+			'cathy@example.com',
+			'Customer Data Director',
+			'Ebert, Schamberger and Johnston',
+			'Mexico'
+		],
+		[
+			'20',
 			'Tyrone',
 			'tyrone@example.com',
 			'Senior Response Liaison',
@@ -132,52 +184,57 @@
 <div class="page-content">
 	<Container fluid>
 		<BreadCrumb title="GRID JS" pageTitle="Tables" />
+			<Row>
+				<Col lg={12}>
+					<Card>
+						<CardHeader>
+							<h4 class="card-title mb-0 flex-grow-1">List User</h4>
+						</CardHeader>
 
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0 flex-grow-1">Base Example</h4>
-					</CardHeader>
+						<CardBody>
+							<div id="table-gridjs">
+								<Grid
+									{data}
+									columns={[
+										'ID',
+										'Name',
+										{
+											name: 'Email',
+											width: '180px',
+											formatter: (cell, row) => html(`<a href="javascript://"> ${cell} </a>`)
+										},
+										{
+											name: 'Position',
+											width: '228px',
+										},
+										'Company',
+										'Country',
+										{
+											name: 'Actions',
+											width: '120px',
+											formatter: (cell) =>
+												html(
+													`<a href="javascript://" class="text-reset mx-1"> 
+														<i class="mdi mdi-18px mdi-account-edit"></i>	
+													</a>
+													<a href="javascript://" class="text-reset mx-1">
+														<i class="mdi mdi-18px mdi-delete"></i>
+													</a>
+													`
+												)
+										}
+									]}
+									search={true}
+									sort={true}
+									pagination={{ enabled: true, limit: 11 }}
+								/>
+							</div>
+						</CardBody>
+					</Card>
+				</Col>
+			</Row>
 
-					<CardBody>
-						<div id="table-gridjs">
-							<Grid
-								{data}
-								columns={[
-									'ID',
-									'Name',
-									{
-										name: 'Email',
-										width: '180px',
-										formatter: (cell, row) => html(`<a href="javascript://"> ${cell} </a>`)
-									},
-									{
-										name: 'Position',
-										width: '228px',
-									},
-									'Company',
-									'Country',
-									{
-										name: 'Actions',
-										width: '120px',
-										formatter: (cell) =>
-											html(
-												`<a href="javascript://" class="text-reset text-decoration-underline"> Details </a>`
-											)
-									}
-								]}
-								search={true}
-								sort={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
+		<!-- <Row>
 			<Col lg={12}>
 				<Card>
 					<CardHeader>
@@ -371,7 +428,7 @@
 					</CardBody>
 				</Card>
 			</Col>
-		</Row>
+		</Row> -->
 	</Container>
 </div>
 

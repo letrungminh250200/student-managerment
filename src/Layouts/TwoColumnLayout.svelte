@@ -132,7 +132,6 @@
 	const initialMenu = () => {
 		if (browser) {
 			pathName = $page.url.pathname;
-			console.log(pathName)
 			if (pathName === "/Widgets/widget") {
 				document.body.classList.add("twocolumn-panel");
 			} else {
