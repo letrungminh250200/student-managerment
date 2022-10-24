@@ -3,6 +3,7 @@
 </svelte:head>
 <script>
 	import Grid from 'gridjs-svelte';
+	import { h, PluginPosition } from "gridjs";
 	import {
 		Card,
 		CardBody,
@@ -12,6 +13,11 @@
 		Label,
 		Row,
 		Table,
+		Button,
+		Modal,
+		ModalBody,
+		ModalFooter,
+		ModalHeader,
 		CardHeader
 	} from 'sveltestrap';
 	import BreadCrumb from '../../Components/Common/BreadCrumb.svelte';
@@ -124,75 +130,22 @@
 		]
 	];
 
-	const data1 = [
-		['#VL2111', 'Jonathan', '07 Oct, 2021', '$24.05', 'Paid'],
-		['#VL2110', 'Harold', '07 Oct, 2021', '$26.15', 'Paid'],
-		['#VL2109', 'Shannon', '06 Oct, 2021', '$21.25', 'Refund'],
-		['#VL2108', 'Robert', '05 Oct, 2021', '$25.03', 'Paid'],
-		['#VL2107', 'Noel', '05 Oct, 2021', '$22.61', 'Paid'],
-		['#VL2106', 'Traci', '04 Oct, 2021', '$24.05', 'Paid'],
-		['#VL2105', 'Kerry', '04 Oct, 2021', '$26.15', 'Paid'],
-		['#VL2104', 'Patsy', '04 Oct, 2021', '$21.25', 'Refund'],
-		['#VL2103', 'Cathy', '03 Oct, 2021', '$22.61', 'Paid'],
-		['#VL2102', 'Tyrone', '03 Oct, 2021', '$25.03', 'Paid']
-	];
-
-	const data2 = [
-		[
-			'Jonathan',
-			'jonathan@example.com',
-			'Senior Implementation Architect',
-			'Hauck Inc',
-			'Holy See'
-		],
-		['Harold', 'harold@example.com', 'Forward Creative Coordinator', 'Metz Inc', 'Iran'],
-		[
-			'Shannon',
-			'shannon@example.com',
-			'Legacy Functionality Associate',
-			'Zemlak Group',
-			'South Georgia'
-		],
-		['Robert', 'robert@example.com', 'Product Accounts Technician', 'Hoeger', 'San Marino'],
-		['Noel', 'noel@example.com', 'Customer Data Director', 'Howell - Rippin', 'Germany'],
-		['Traci', 'traci@example.com', 'Corporate Identity Director', 'Koelpin - Goldner', 'Vanuatu'],
-		[
-			'Kerry',
-			'kerry@example.com',
-			'Lead Applications Associate',
-			'Feeney, Langworth and Tremblay',
-			'Niger'
-		],
-		['Patsy', 'patsy@example.com', 'Dynamic Assurance Director', 'Streich Group', 'Niue'],
-		[
-			'Cathy',
-			'cathy@example.com',
-			'Customer Data Director',
-			'Ebert, Schamberger and Johnston',
-			'Mexico'
-		],
-		[
-			'Tyrone',
-			'tyrone@example.com',
-			'Senior Response Liaison',
-			'Raynor, Rolfson and Daugherty',
-			'Qatar'
-		]
-	];
+	let open = false;
+	const toggle = () => (open = !open);
 </script>
 
 <div class="page-content">
 	<Container fluid>
-		<BreadCrumb title="GRID JS" pageTitle="Tables" />
+		<BreadCrumb title="Customer" pageTitle="Tables" />
 			<Row>
 				<Col lg={12}>
 					<Card>
-						<CardHeader>
-							<h4 class="card-title mb-0 flex-grow-1">List User</h4>
-						</CardHeader>
-
 						<CardBody>
-							<div id="table-gridjs">
+							<div id="table-gridjs" class="position-relative">
+								<Button  class="btn btn-primary position-absolute text-reset mx-1" style="right:0; z-index:1;" on:click={toggle}> 
+									<i class="mdi mdi-18px mdi-account-plus"></i> Add user	
+								</Button>
+								
 								<Grid
 									{data}
 									columns={[
@@ -212,223 +165,36 @@
 										{
 											name: 'Actions',
 											width: '120px',
-											formatter: (cell) =>
-												html(
-													`<a href="javascript://" class="text-reset mx-1"> 
-														<i class="mdi mdi-18px mdi-account-edit"></i>	
-													</a>
-													<a href="javascript://" class="text-reset mx-1">
-														<i class="mdi mdi-18px mdi-delete"></i>
-													</a>
-													`
-												)
-										}
+											formatter: (cell, row) => {
+												return h('button', {
+													className: 'btn btn-primary text-white ',
+													onClick: () => toggle()
+												}, 'Edit');
+											}
+											
+										},
+										
 									]}
 									search={true}
 									sort={true}
-									pagination={{ enabled: true, limit: 11 }}
+									pagination={{ enabled: true, limit: 8 }}
 								/>
 							</div>
 						</CardBody>
 					</Card>
 				</Col>
+				<Modal isOpen={open} {toggle}>
+					<ModalHeader {toggle}>Modal title</ModalHeader>
+					<ModalBody>
+					  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+					  tempor incididunt ut labore et dolore magna aliqua.
+					</ModalBody>
+					<ModalFooter>
+					  <Button color="primary" on:click={toggle}>Do Something</Button>
+					  <Button color="secondary" on:click={toggle}>Cancel</Button>
+					</ModalFooter>
+				</Modal>
 			</Row>
-
-		<!-- <Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Card Table</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-card" class="table-card">
-							<Grid
-								data={data2}
-								columns={['Name',
-								{
-										name: 'Email',
-										width: '200px'
-								},'Position', 'Company',{
-										name: 'Country',
-										width: '160px'
-								}]}
-								sort={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Pagination</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-pagination">
-							<Grid
-								data={data1}
-								columns={[
-									{
-										name: 'ID',
-										width: '120px',
-										formatter: (cell, row) => html(`<a href="javascript://"> ${cell} </a>`)
-									},
-									'Name',
-									'Date',
-									'Total',
-									'Status',
-									{
-										name: 'Actions',
-										width: '100px',
-										formatter: (cell) =>
-											html(`<button type='button' class='btn btn-sm btn-light'> Details </button>`)
-									}
-								]}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Search</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-search">
-							<Grid
-								data={data2}
-								columns={['Name', {
-									name: 'Email',
-									width: '200px'
-							}, 'Position', 'Company', {
-										name: 'Country',
-										width: '160px'
-								}]}
-								search={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Sorting</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-sorting">
-							<Grid
-								data={data2}
-								columns={['Name', 'Email', 'Position', 'Company', 'Country']}
-								sort={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Loading State</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-loading-state">
-							<Grid
-								data={function () {
-									return new Promise(function (resolve) {
-										setTimeout(function () {
-											resolve(data2);
-										}, 2000);
-									});
-								}}
-								columns={['Name', 'Email', 'Position', 'Company', 'Country']}
-								sort={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Fixed Header</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-fixed-header">
-							<Grid
-								data={data2}
-								columns={['Name', 'Email', 'Position', 'Company', 'Country']}
-								sort={true}
-								pagination={{ enabled: true, limit: 10 }}
-								fixedHeader={true}
-								height={'400px'}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row>
-
-		<Row>
-			<Col lg={12}>
-				<Card>
-					<CardHeader>
-						<h4 class="card-title mb-0">Hidden Columns</h4>
-					</CardHeader>
-
-					<CardBody>
-						<div id="table-hidden-column">
-							<Grid
-								{data}
-								columns={[
-									{
-										name: 'ID',
-										hidden: true
-									},
-									'Name',
-									'Email',
-									'Position',
-									'Company',
-									{
-										name: 'Country',
-										hidden: true
-									}
-								]}
-								sort={true}
-								pagination={{ enabled: true, limit: 5 }}
-							/>
-						</div>
-					</CardBody>
-				</Card>
-			</Col>
-		</Row> -->
 	</Container>
 </div>
 
