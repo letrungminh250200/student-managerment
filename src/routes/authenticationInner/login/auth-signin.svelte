@@ -3,25 +3,25 @@
 	import Link from "svelte-link";
 	import ParticlesAuth from "../ParticlesAuth.svelte";
 	import logolight from '../../../assets/images/logo-light.png'
-	import supabase from '../../../lib/service/db';
+	import {signIn} from '../../../lib/service/service'
 	import {userStore} from '../../../lib/store/userStore'
+	import {goto} from '$app/navigation';
 	
 	async function login(){
 		let email = document.getElementById('useremail').value;
 		let password = document.getElementById('password-input').value;
-		userStore.set({minh: 12456})
-		await supabase.auth.signInWithPassword({email,password})
+		
+		await signIn(email,password)
 		.then(res => {
-			if(res.data.session == null){
-				alert("Email or password is invalid")
-			}else{
-				userStore.set(res)
-				// return window.location.href= '/'
-			}
+			(res.data.session == null)?alert("Email or password is invalid"):userStore.set(res.data.session)
+		})
+		.then(() => {
+			return goto('/')
 		})
 		.catch(e => console.log(e))
 	};
-	console.log($userStore)
+	userStore.set({minh: 12456})
+	// console.log($userStore)
 	// localStorage.setItem(supabase.auth.storageKey, null)
 	// function checkUser(){
 	// 	setTimeout(() =>{
