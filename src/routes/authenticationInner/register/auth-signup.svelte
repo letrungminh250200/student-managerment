@@ -2,9 +2,29 @@
     import Link from "svelte-link";
     import { Card, CardBody, Col, Container, Row,Label } from "sveltestrap";
     import ParticlesAuth from "../ParticlesAuth.svelte";
+    // import supabase from '../../../lib/db';
+    import {signup} from '../../../lib/service/service'
 
     //import images
     import logoLight from "../../../assets/images/logo-light.png";
+
+	async function register() {
+        let email = document.getElementById("useremail").value;
+        let password = document.getElementById("userpassword").value;
+        await signup(email,password)
+        .then(res => res)
+        // .then(() => window.location.href= '/authenticationInner/successmessage/auth-success-msg-basic')
+        .catch(err => alert(err.message))
+	}
+    // function checkUser(){
+	// 	const local = localStorage.getItem('sb-trnsohfvgkrqzwrtqrnk-auth-token') ?? []
+	// 	if(local){
+	// 		window.location.href= '/'
+	// 	}else{
+	// 		return null
+	// 	}
+	// }
+	// checkUser()
 </script>
 
 <svelte:head>
@@ -39,7 +59,7 @@
                                 </p>
                             </div>
                             <div class="p-2 mt-4">
-                                <form class="needs-validation" action="#">
+                                <form class="needs-validation" on:submit|preventDefault={register} >
                                     <div class="mb-3">
                                         <Label
                                             for="useremail"
@@ -59,7 +79,7 @@
                                             Please enter email
                                         </div>
                                     </div>
-                                    <div class="mb-3">
+                                    <!-- <div class="mb-3">
                                         <Label for="username" class="form-label"
                                             >Username <span class="text-danger"
                                                 >*</span
@@ -75,7 +95,7 @@
                                         <div class="invalid-feedback">
                                             Please enter username
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="mb-2">
                                         <Label
@@ -96,7 +116,7 @@
                                             Please enter password
                                         </div>
                                     </div>
-
+                                    
                                     <div class="mb-4">
                                         <p
                                             class="mb-0 fs-13 text-muted fst-italic"

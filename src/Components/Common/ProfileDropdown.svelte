@@ -5,7 +5,18 @@
         DropdownMenu,
         DropdownItem,
     } from "sveltestrap";
-    import avatar1 from '../../assets/images/users/avatar-1.jpg';
+    import avatar1 from '../../assets/images/users/user-1.png';
+    import supabase from '../../lib/service/db';
+	import {userStore} from '../../lib/store/userStore'
+
+    console.log($userStore)
+
+	async function logout(){
+		await supabase.auth.signOut()
+        .then(() => window.location.href= '/authenticationInner/login/auth-signin')
+        .catch(e => console.log(e))
+	};
+    
 </script>
 
 <Dropdown class="ms-sm-3 header-item topbar-user">
@@ -55,9 +66,11 @@
                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"
             /> <span class="align-middle">Settings</span></DropdownItem
         >
-        <DropdownItem href="/authenticationInner/login/auth-signin"
+        <DropdownItem 
+            on:click={() => logout()}
             ><i class="mdi mdi-logout text-muted fs-16 align-middle me-1" />
             <span class="align-middle" data-key="t-logout">Logout</span
+
             ></DropdownItem
         >
     </DropdownMenu>

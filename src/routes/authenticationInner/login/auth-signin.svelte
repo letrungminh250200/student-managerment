@@ -3,6 +3,38 @@
 	import Link from "svelte-link";
 	import ParticlesAuth from "../ParticlesAuth.svelte";
 	import logolight from '../../../assets/images/logo-light.png'
+	import supabase from '../../../lib/service/db';
+	import {userStore} from '../../../lib/store/userStore'
+	
+	async function login(){
+		let email = document.getElementById('useremail').value;
+		let password = document.getElementById('password-input').value;
+		userStore.set({minh: 12456})
+		await supabase.auth.signInWithPassword({email,password})
+		.then(res => {
+			if(res.data.session == null){
+				alert("Email or password is invalid")
+			}else{
+				userStore.set(res)
+				// return window.location.href= '/'
+			}
+		})
+		.catch(e => console.log(e))
+	};
+	console.log($userStore)
+	// localStorage.setItem(supabase.auth.storageKey, null)
+	// function checkUser(){
+	// 	setTimeout(() =>{
+	// 		const local = localStorage.getItem(supabase.auth.storageKey) ?? []
+	// 		if(local){
+	// 		window.location.href= '/'
+	// 	}else{
+	// 		return null
+	// 	}
+	// 	const {user} = supabase.auth.user()
+	// 	},100)
+	// }
+	// checkUser()
 </script>
 
 <svelte:head>
@@ -42,17 +74,25 @@
 								</p>
 							</div>
 							<div class="p-2 mt-4">
-								<form action="index">
+								<form action="index" on:submit|preventDefault={login}>
 									<div class="mb-3">
-										<Label for="username" class="form-label"
-											>Username</Label
-										>
+										<Label
+                                            for="useremail"
+                                            class="form-label"
+                                            >Email <span class="text-danger"
+                                                >*</span
+                                            ></Label
+                                        >
 										<input
-											type="text"
-											class="form-control"
-											id="username"
-											placeholder="Enter username"
-										/>
+                                            type="email"
+                                            class="form-control"
+                                            id="useremail"
+                                            placeholder="Enter email address"
+                                            required
+                                        />
+										<!-- <div class="invalid-feedback">
+                                            Please enter email
+                                        </div> -->
 									</div>
 
 									<div class="mb-3">
@@ -67,8 +107,7 @@
 											class="form-label"
 											for="password-input">Password</Label
 										>
-										<div class="position-relative auth-pass-inputgroup mb-3"
-										>
+										<div class="position-relative auth-pass-inputgroup mb-3">
 											<input
 												type="password"
 												class="form-control pe-5"
@@ -78,11 +117,7 @@
 											<button
 												class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
 												type="button"
-												id="password-addon"
-												><i
-													class="ri-eye-fill align-middle"
-												/></button
-											>
+												id="password-addon"><i class="ri-eye-fill align-middle"/></button>
 										</div>
 									</div>
 
@@ -100,18 +135,26 @@
 										>
 									</div>
 
-									<!-- <div class="mt-4">
+									<div class="mt-4">
 										<button
 											class="btn btn-success w-100"
 											type="submit">Sign In</button
 										>
+									</div>
+									<!-- <div class="mt-4">
+										<button
+											class="btn btn-success w-100"
+											type="button"
+											on:click={() => login()}
+											>Sign In</button
+										>
 									</div> -->
-									<div class="mt-4">
+									<!-- <div class="mt-4">
 										<Link
 										href="/dashboard"
 											class="btn btn-success w-100"
 											>Sign In</Link>
-									</div>
+									</div> -->
 
 									<div class="mt-4 text-center">
 										<div class="signin-other-title">

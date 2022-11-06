@@ -1739,7 +1739,7 @@ const StripedColumnsTables = `<table class="table align-middle table-nowrap tabl
 														/> Subscribed</td
 													>
 													<td>
-														<div 					class="hstack gap-3 flex-wrap"
+														<div class="hstack gap-3 flex-wrap"
 														>
 															<Link
 																href="#"
@@ -1770,7 +1770,7 @@ const StripedColumnsTables = `<table class="table align-middle table-nowrap tabl
 														/> Unsubscribed</td
 													>
 													<td>
-														<div 					class="hstack gap-3 flex-wrap"
+														<div class="hstack gap-3 flex-wrap"
 														>
 															<Link
 																href="#"
@@ -1801,7 +1801,7 @@ const StripedColumnsTables = `<table class="table align-middle table-nowrap tabl
 														/> Subscribed</td
 													>
 													<td>
-														<div 					class="hstack gap-3 flex-wrap"
+														<div class="hstack gap-3 flex-wrap"
 														>
 															<Link
 																href="#"

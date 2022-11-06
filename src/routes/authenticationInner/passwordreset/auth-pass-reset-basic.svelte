@@ -3,6 +3,15 @@
     import { Alert, Card, CardBody, Col, Container, Row,Label } from "sveltestrap";
     import ParticlesAuth from "../ParticlesAuth.svelte";
     import logoLight from "../../../assets/images/logo-light.png";
+    import supabase from '../../../lib/service/db';
+
+	async function resetPass() {
+        let email = document.getElementById("email").value;
+        let { data, error } = await supabase.auth.api.resetPasswordForEmail(email)
+        // .then(res => console.log(res))
+        // .catch(err => alert(err.message))
+        console.log(data)
+	}
 </script>
 
 <svelte:head>
@@ -53,7 +62,7 @@
                                 to you!
                             </Alert>
                             <div class="p-2">
-                                <form>
+                                <form on:submit|preventDefault={resetPass}>
                                     <div class="mb-4">
                                         <Label class="form-label" for="email"
                                             >Email</Label

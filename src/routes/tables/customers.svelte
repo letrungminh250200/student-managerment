@@ -141,7 +141,7 @@
 				<Col lg={12}>
 					<Card>
 						<CardBody>
-							<div id="table-gridjs" class="position-relative">
+							<div id="table-gridjs" class="position-relative table-customer">
 								<Button  class="btn btn-primary position-absolute text-reset mx-1" style="right:0; z-index:1;" on:click={toggle}> 
 									<i class="mdi mdi-18px mdi-account-plus"></i> Add user	
 								</Button>
@@ -163,7 +163,8 @@
 										'Company',
 										'Country',
 										{
-											name: 'Actions',
+											name: '',
+											sortable: false,
 											width: '120px',
 											formatter: (cell, row) => {
 												return h('button', {
@@ -173,8 +174,22 @@
 											}
 											
 										},
+										{
+											name: '',
+											sortable: false,
+											width: '120px',
+											className: 'le-trung-minh',
+											formatter: (cell, row) => {
+												return h('button', {
+													className: 'btn btn-primary text-white ',
+													onClick: () => toggle()
+												}, 'Delete');
+											}
+											
+										},
 										
 									]}
+									
 									search={true}
 									sort={true}
 									pagination={{ enabled: true, limit: 8 }}
@@ -200,4 +215,7 @@
 
 <style global>
 	@import '//cdn.jsdelivr.net/npm/gridjs/dist/theme/mermaid.min.css';
+	.table-customer button.gridjs-sort:last-child(7){
+   		display: none !important;
+	}
 </style>

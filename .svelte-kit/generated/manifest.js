@@ -6,7 +6,6 @@ const c = [
 	() => import("..\\..\\src\\routes\\authenticationInner\\twostepverification\\auth-twostep-cover.svelte"),
 	() => import("..\\..\\src\\routes\\authenticationInner\\passwordcreate\\auth-pass-change-basic.svelte"),
 	() => import("..\\..\\src\\routes\\authenticationInner\\successmessage\\auth-success-msg-basic.svelte"),
-	() => import("..\\..\\src\\routes\\authenticationInner\\successmessage\\auth-success-msg-cover.svelte"),
 	() => import("..\\..\\src\\routes\\authenticationInner\\ParticlesAuth.svelte"),
 	() => import("..\\..\\src\\routes\\authenticationInner\\passwordreset\\auth-pass-reset-basic.svelte"),
 	() => import("..\\..\\src\\routes\\authenticationInner\\AuthSlider.svelte"),
@@ -80,167 +79,164 @@ export const routes = [
 	// src/routes/authenticationInner/successmessage/auth-success-msg-basic.svelte
 	[/^\/authenticationInner\/successmessage\/auth-success-msg-basic\/?$/, [c[0], c[6]], [c[1]]],
 
-	// src/routes/authenticationInner/successmessage/auth-success-msg-cover.svelte
-	[/^\/authenticationInner\/successmessage\/auth-success-msg-cover\/?$/, [c[0], c[7]], [c[1]]],
-
 	// src/routes/authenticationInner/ParticlesAuth.svelte
-	[/^\/authenticationInner\/ParticlesAuth\/?$/, [c[0], c[8]], [c[1]]],
+	[/^\/authenticationInner\/ParticlesAuth\/?$/, [c[0], c[7]], [c[1]]],
 
 	// src/routes/authenticationInner/passwordreset/auth-pass-reset-basic.svelte
-	[/^\/authenticationInner\/passwordreset\/auth-pass-reset-basic\/?$/, [c[0], c[9]], [c[1]]],
+	[/^\/authenticationInner\/passwordreset\/auth-pass-reset-basic\/?$/, [c[0], c[8]], [c[1]]],
 
 	// src/routes/authenticationInner/AuthSlider.svelte
-	[/^\/authenticationInner\/AuthSlider\/?$/, [c[0], c[10]], [c[1]]],
+	[/^\/authenticationInner\/AuthSlider\/?$/, [c[0], c[9]], [c[1]]],
 
 	// src/routes/authenticationInner/register/auth-signup.svelte
-	[/^\/authenticationInner\/register\/auth-signup\/?$/, [c[0], c[11]], [c[1]]],
+	[/^\/authenticationInner\/register\/auth-signup\/?$/, [c[0], c[10]], [c[1]]],
 
 	// src/routes/authenticationInner/errors/auth-404-basic.svelte
-	[/^\/authenticationInner\/errors\/auth-404-basic\/?$/, [c[0], c[12]], [c[1]]],
+	[/^\/authenticationInner\/errors\/auth-404-basic\/?$/, [c[0], c[11]], [c[1]]],
 
 	// src/routes/authenticationInner/errors/auth-404-cover.svelte
-	[/^\/authenticationInner\/errors\/auth-404-cover\/?$/, [c[0], c[13]], [c[1]]],
+	[/^\/authenticationInner\/errors\/auth-404-cover\/?$/, [c[0], c[12]], [c[1]]],
 
 	// src/routes/authenticationInner/errors/auth-404-alt.svelte
-	[/^\/authenticationInner\/errors\/auth-404-alt\/?$/, [c[0], c[14]], [c[1]]],
+	[/^\/authenticationInner\/errors\/auth-404-alt\/?$/, [c[0], c[13]], [c[1]]],
 
 	// src/routes/authenticationInner/errors/auth-offline.svelte
-	[/^\/authenticationInner\/errors\/auth-offline\/?$/, [c[0], c[15]], [c[1]]],
+	[/^\/authenticationInner\/errors\/auth-offline\/?$/, [c[0], c[14]], [c[1]]],
 
 	// src/routes/authenticationInner/errors/auth-500.svelte
-	[/^\/authenticationInner\/errors\/auth-500\/?$/, [c[0], c[16]], [c[1]]],
+	[/^\/authenticationInner\/errors\/auth-500\/?$/, [c[0], c[15]], [c[1]]],
 
 	// src/routes/authenticationInner/login/auth-signin.svelte
-	[/^\/authenticationInner\/login\/auth-signin\/?$/, [c[0], c[17]], [c[1]]],
+	[/^\/authenticationInner\/login\/auth-signin\/?$/, [c[0], c[16]], [c[1]]],
 
 	// src/routes/filemanager/index.svelte
-	[/^\/filemanager\/?$/, [c[0], c[18]], [c[1]]],
+	[/^\/filemanager\/?$/, [c[0], c[17]], [c[1]]],
 
 	// src/routes/filemanager/FileManagerCharts.svelte
-	[/^\/filemanager\/FileManagerCharts\/?$/, [c[0], c[19]], [c[1]]],
+	[/^\/filemanager\/FileManagerCharts\/?$/, [c[0], c[18]], [c[1]]],
 
 	// src/routes/dashboard/index.svelte
-	[/^\/dashboard\/?$/, [c[0], c[20]], [c[1]]],
+	[/^\/dashboard\/?$/, [c[0], c[19]], [c[1]]],
 
 	// src/routes/dashboard/ProjectsOverviewCharts.svelte
-	[/^\/dashboard\/ProjectsOverviewCharts\/?$/, [c[0], c[21]], [c[1]]],
+	[/^\/dashboard\/ProjectsOverviewCharts\/?$/, [c[0], c[20]], [c[1]]],
 
 	// src/routes/dashboard/PrjectsStatusCharts.svelte
-	[/^\/dashboard\/PrjectsStatusCharts\/?$/, [c[0], c[22]], [c[1]]],
+	[/^\/dashboard\/PrjectsStatusCharts\/?$/, [c[0], c[21]], [c[1]]],
 
 	// src/routes/dashboard/TeamMembersCharts.svelte
-	[/^\/dashboard\/TeamMembersCharts\/?$/, [c[0], c[23]], [c[1]]],
+	[/^\/dashboard\/TeamMembersCharts\/?$/, [c[0], c[22]], [c[1]]],
 
 	// src/routes/dashboard/UpcomingSchedules.svelte
-	[/^\/dashboard\/UpcomingSchedules\/?$/, [c[0], c[24]], [c[1]]],
+	[/^\/dashboard\/UpcomingSchedules\/?$/, [c[0], c[23]], [c[1]]],
 
 	// src/routes/dashboard/ProjectsOverview.svelte
-	[/^\/dashboard\/ProjectsOverview\/?$/, [c[0], c[25]], [c[1]]],
+	[/^\/dashboard\/ProjectsOverview\/?$/, [c[0], c[24]], [c[1]]],
 
 	// src/routes/dashboard/ActiveProjects.svelte
-	[/^\/dashboard\/ActiveProjects\/?$/, [c[0], c[26]], [c[1]]],
+	[/^\/dashboard\/ActiveProjects\/?$/, [c[0], c[25]], [c[1]]],
 
 	// src/routes/dashboard/ProjectsStatus.svelte
-	[/^\/dashboard\/ProjectsStatus\/?$/, [c[0], c[27]], [c[1]]],
+	[/^\/dashboard\/ProjectsStatus\/?$/, [c[0], c[26]], [c[1]]],
 
 	// src/routes/dashboard/TeamMembers.svelte
-	[/^\/dashboard\/TeamMembers\/?$/, [c[0], c[28]], [c[1]]],
+	[/^\/dashboard\/TeamMembers\/?$/, [c[0], c[27]], [c[1]]],
 
 	// src/routes/dashboard/MyTasks.svelte
-	[/^\/dashboard\/MyTasks\/?$/, [c[0], c[29]], [c[1]]],
+	[/^\/dashboard\/MyTasks\/?$/, [c[0], c[28]], [c[1]]],
 
 	// src/routes/dashboard/Widgets.svelte
-	[/^\/dashboard\/Widgets\/?$/, [c[0], c[30]], [c[1]]],
+	[/^\/dashboard\/Widgets\/?$/, [c[0], c[29]], [c[1]]],
 
 	// src/routes/dashboard/Chat.svelte
-	[/^\/dashboard\/Chat\/?$/, [c[0], c[31]], [c[1]]],
+	[/^\/dashboard\/Chat\/?$/, [c[0], c[30]], [c[1]]],
 
 	// src/routes/projects/apps-projects-overview.svelte
-	[/^\/projects\/apps-projects-overview\/?$/, [c[0], c[32]], [c[1]]],
+	[/^\/projects\/apps-projects-overview\/?$/, [c[0], c[31]], [c[1]]],
 
 	// src/routes/projects/apps-projects-create.svelte
-	[/^\/projects\/apps-projects-create\/?$/, [c[0], c[33]], [c[1]]],
+	[/^\/projects\/apps-projects-create\/?$/, [c[0], c[32]], [c[1]]],
 
 	// src/routes/projects/apps-projects-list.svelte
-	[/^\/projects\/apps-projects-list\/?$/, [c[0], c[34]], [c[1]]],
+	[/^\/projects\/apps-projects-list\/?$/, [c[0], c[33]], [c[1]]],
 
 	// src/routes/projects/ProjectOverview/ActivitiesTab.svelte
-	[/^\/projects\/ProjectOverview\/ActivitiesTab\/?$/, [c[0], c[35]], [c[1]]],
+	[/^\/projects\/ProjectOverview\/ActivitiesTab\/?$/, [c[0], c[34]], [c[1]]],
 
 	// src/routes/projects/ProjectOverview/DocumentsTab.svelte
-	[/^\/projects\/ProjectOverview\/DocumentsTab\/?$/, [c[0], c[36]], [c[1]]],
+	[/^\/projects\/ProjectOverview\/DocumentsTab\/?$/, [c[0], c[35]], [c[1]]],
 
 	// src/routes/projects/ProjectOverview/OverviewTab.svelte
-	[/^\/projects\/ProjectOverview\/OverviewTab\/?$/, [c[0], c[37]], [c[1]]],
+	[/^\/projects\/ProjectOverview\/OverviewTab\/?$/, [c[0], c[36]], [c[1]]],
 
 	// src/routes/projects/ProjectOverview/Section.svelte
-	[/^\/projects\/ProjectOverview\/Section\/?$/, [c[0], c[38]], [c[1]]],
+	[/^\/projects\/ProjectOverview\/Section\/?$/, [c[0], c[37]], [c[1]]],
 
 	// src/routes/projects/ProjectOverview/TeamTab.svelte
-	[/^\/projects\/ProjectOverview\/TeamTab\/?$/, [c[0], c[39]], [c[1]]],
+	[/^\/projects\/ProjectOverview\/TeamTab\/?$/, [c[0], c[38]], [c[1]]],
 
 	// src/routes/projects/List.svelte
-	[/^\/projects\/List\/?$/, [c[0], c[40]], [c[1]]],
+	[/^\/projects\/List\/?$/, [c[0], c[39]], [c[1]]],
 
 	// src/routes/landing/OnePage/index.svelte
-	[/^\/landing\/OnePage\/?$/, [c[0], c[41]], [c[1]]],
+	[/^\/landing\/OnePage\/?$/, [c[0], c[40]], [c[1]]],
 
 	// src/routes/landing/OnePage/workProcess.svelte
-	[/^\/landing\/OnePage\/workProcess\/?$/, [c[0], c[42]], [c[1]]],
+	[/^\/landing\/OnePage\/workProcess\/?$/, [c[0], c[41]], [c[1]]],
 
 	// src/routes/landing/OnePage/features.svelte
-	[/^\/landing\/OnePage\/features\/?$/, [c[0], c[43]], [c[1]]],
+	[/^\/landing\/OnePage\/features\/?$/, [c[0], c[42]], [c[1]]],
 
 	// src/routes/landing/OnePage/services.svelte
-	[/^\/landing\/OnePage\/services\/?$/, [c[0], c[44]], [c[1]]],
+	[/^\/landing\/OnePage\/services\/?$/, [c[0], c[43]], [c[1]]],
 
 	// src/routes/landing/OnePage/contact.svelte
-	[/^\/landing\/OnePage\/contact\/?$/, [c[0], c[45]], [c[1]]],
+	[/^\/landing\/OnePage\/contact\/?$/, [c[0], c[44]], [c[1]]],
 
 	// src/routes/landing/OnePage/counter.svelte
-	[/^\/landing\/OnePage\/counter\/?$/, [c[0], c[46]], [c[1]]],
+	[/^\/landing\/OnePage\/counter\/?$/, [c[0], c[45]], [c[1]]],
 
 	// src/routes/landing/OnePage/reviews.svelte
-	[/^\/landing\/OnePage\/reviews\/?$/, [c[0], c[47]], [c[1]]],
+	[/^\/landing\/OnePage\/reviews\/?$/, [c[0], c[46]], [c[1]]],
 
 	// src/routes/landing/OnePage/client.svelte
-	[/^\/landing\/OnePage\/client\/?$/, [c[0], c[48]], [c[1]]],
+	[/^\/landing\/OnePage\/client\/?$/, [c[0], c[47]], [c[1]]],
 
 	// src/routes/landing/OnePage/footer.svelte
-	[/^\/landing\/OnePage\/footer\/?$/, [c[0], c[49]], [c[1]]],
+	[/^\/landing\/OnePage\/footer\/?$/, [c[0], c[48]], [c[1]]],
 
 	// src/routes/landing/OnePage/navbar.svelte
-	[/^\/landing\/OnePage\/navbar\/?$/, [c[0], c[50]], [c[1]]],
+	[/^\/landing\/OnePage\/navbar\/?$/, [c[0], c[49]], [c[1]]],
 
 	// src/routes/landing/OnePage/plans.svelte
-	[/^\/landing\/OnePage\/plans\/?$/, [c[0], c[51]], [c[1]]],
+	[/^\/landing\/OnePage\/plans\/?$/, [c[0], c[50]], [c[1]]],
 
 	// src/routes/landing/OnePage/home.svelte
-	[/^\/landing\/OnePage\/home\/?$/, [c[0], c[52]], [c[1]]],
+	[/^\/landing\/OnePage\/home\/?$/, [c[0], c[51]], [c[1]]],
 
 	// src/routes/landing/OnePage/cta.svelte
-	[/^\/landing\/OnePage\/cta\/?$/, [c[0], c[53]], [c[1]]],
+	[/^\/landing\/OnePage\/cta\/?$/, [c[0], c[52]], [c[1]]],
 
 	// src/routes/landing/OnePage/faq.svelte
-	[/^\/landing\/OnePage\/faq\/?$/, [c[0], c[54]], [c[1]]],
+	[/^\/landing\/OnePage\/faq\/?$/, [c[0], c[53]], [c[1]]],
 
 	// src/routes/tables/basictables/tables-basic.svelte
-	[/^\/tables\/basictables\/tables-basic\/?$/, [c[0], c[55]], [c[1]]],
+	[/^\/tables\/basictables\/tables-basic\/?$/, [c[0], c[54]], [c[1]]],
 
 	// src/routes/tables/customers.svelte
-	[/^\/tables\/customers\/?$/, [c[0], c[56]], [c[1]]],
+	[/^\/tables\/customers\/?$/, [c[0], c[55]], [c[1]]],
 
 	// src/routes/pages/pages-coming-soon.svelte
-	[/^\/pages\/pages-coming-soon\/?$/, [c[0], c[57]], [c[1]]],
+	[/^\/pages\/pages-coming-soon\/?$/, [c[0], c[56]], [c[1]]],
 
 	// src/routes/pages/pages-maintenance.svelte
-	[/^\/pages\/pages-maintenance\/?$/, [c[0], c[58]], [c[1]]],
+	[/^\/pages\/pages-maintenance\/?$/, [c[0], c[57]], [c[1]]],
 
 	// src/routes/pages/profile/settings/pages-profile-settings.svelte
-	[/^\/pages\/profile\/settings\/pages-profile-settings\/?$/, [c[0], c[59]], [c[1]]],
+	[/^\/pages\/profile\/settings\/pages-profile-settings\/?$/, [c[0], c[58]], [c[1]]],
 
 	// src/routes/pages/profile/simple/simplepage.svelte
-	[/^\/pages\/profile\/simple\/simplepage\/?$/, [c[0], c[60]], [c[1]]]
+	[/^\/pages\/profile\/simple\/simplepage\/?$/, [c[0], c[59]], [c[1]]]
 ];
 
 // we import the root layout/error components eagerly, so that
