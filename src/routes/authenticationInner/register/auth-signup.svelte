@@ -3,7 +3,8 @@
     import { Card, CardBody, Col, Container, Row,Label } from "sveltestrap";
     import ParticlesAuth from "../ParticlesAuth.svelte";
     // import supabase from '../../../lib/db';
-    import {signup} from '../../../lib/service/service'
+    import {signUp} from '../../../lib/service/service'
+	import {goto} from '$app/navigation';
 
     //import images
     import logoLight from "../../../assets/images/logo-light.png";
@@ -11,9 +12,9 @@
 	async function register() {
         let email = document.getElementById("useremail").value;
         let password = document.getElementById("userpassword").value;
-        await signup(email,password)
+        await signUp(email,password)
         .then(res => res)
-        // .then(() => window.location.href= '/authenticationInner/successmessage/auth-success-msg-basic')
+        .then(() => goto= '/authenticationInner/successmessage/auth-success-msg-basic')
         .catch(err => alert(err.message))
 	}
     // function checkUser(){
