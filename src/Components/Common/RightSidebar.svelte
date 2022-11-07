@@ -868,13 +868,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="offcanvas-footer border-top p-3 text-center">
+		<!-- <div class="offcanvas-footer border-top p-3 text-center">
 			<div class="row">
 				<div class="col-12">
-					<a href="https://1.envato.market/velzon-admin" type="button" class="btn btn-primary w-100">Preview</a>
+					<a href="#" type="button" class="btn btn-primary w-100">Close</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 	</div>
 </div>
 {#if open}
