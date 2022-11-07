@@ -26,7 +26,7 @@
 
 	let open = false;
 	let headerClass = "";
-	let layoutType = "twocolumn";
+	let layoutType = "horizontal";
 
 	addMessages("en", en);
 
