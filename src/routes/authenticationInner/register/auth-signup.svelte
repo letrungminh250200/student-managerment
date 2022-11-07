@@ -14,7 +14,7 @@
         let password = document.getElementById("userpassword").value;
         await signUp(email,password)
         .then(res => res)
-        .then(() => goto= '/authenticationInner/successmessage/auth-success-msg-basic')
+        .then(() => goto('/authenticationInner/successmessage/auth-success-msg-basic'))
         .catch(err => alert(err.message))
 	}
     // function checkUser(){
