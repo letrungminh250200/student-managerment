@@ -6,7 +6,7 @@
           if (user == null) {
               return {
                   status: 302,
-                  redirect: "/dashboard",
+                  redirect: "/authenticationInner/login/auth-signin",
               }
           }
     }
