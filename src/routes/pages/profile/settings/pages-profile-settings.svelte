@@ -22,19 +22,21 @@
 	import Flatpickr from 'svelte-flatpickr';
 	import Select from 'svelte-select';
 	import profilebg from '../../../../assets/images/profile-bg.jpg'
-	import avatar1 from '../../../../assets/images/users/avatar-1.jpg'
+	import avatar1 from '../../../../assets/images/users/user-1.png'
+	import { updateProfile, uploadAvatar, getAvatar, getImages, getUser} from '../../../../lib/service/service'
+	import {userStore} from '../../../../lib/store/userStore'
+	import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
+	import {url} from '../../../../lib/service/db'
+
 	
 	let activeTab = 1;
-
-	const skillOptions = [
-		{ value: 'Select your Skill', label: 'Select your Skill' },
-		{ value: 'CSS', label: 'CSS' },
-		{ value: 'HTML', label: 'HTML' },
-		{ value: 'PYTHON', label: 'PYTHON' },
-		{ value: 'JAVA', label: 'JAVA' },
-		{ value: 'ASP.NET', label: 'ASP.NET' }
+	let selected;
+	let avatar;
+	const genderOptions = [
+		{ value: 0, label: 'Female' },
+		{ value: 1, label: 'Male' },
+		
 	];
-
 	const selectYears = [
 		{ value: 'Select years', label: 'Select years' },
 		{ value: '2001', label: '2001' },
@@ -60,6 +62,71 @@
 		{ value: '2021', label: '2021' },
 		{ value: '2022', label: '2022' }
 	];
+	async function handleChange(e){
+		let {data, error} = await uploadAvatar(e.target.files[0])
+		if(data){
+			// await updateProfile({avatar_url: `${url}/storage/v1/object/sign/avatars/${data.path}`}, $userStore.user.id)
+			await updateProfile({avatar_url: data.path}, $userStore.user.id)
+
+		}else{
+			console.log(error)
+		}
+	}
+	async function updateProfiles(){
+		let fistName = document.getElementById('firstnameInput').value;
+		let lastName = document.getElementById('lastnameInput').value;
+		let full_name = `${lastName} ${fistName}`;
+		let phone = document.getElementById('phonenumberInput').value;
+		let email = document.getElementById('emailInput').value;
+		let gender = selected.value
+		let website = document.getElementById('websiteInput1').value;
+		let address = document.getElementById('addressInput').value;
+		let birthday = document.getElementById('birthdayInput').value;
+		if(fistName == '' || fistName == '' || email == '' || phone == '' || website == '' || address == ''){
+			toasts.add({
+				title: 'Failed',
+				description: 'please fill out this field.', 
+				duration: 3000, 
+				placement: 'bottom-right',
+				type: 'info',
+				placement: 'bottom-right',
+						showProgress: true,
+				type: 'error',
+				theme: 'dark',
+				onClick: () => {},
+				onRemove: () => {},
+			});
+		}else{
+			let data = { full_name, website, email, phone, address, gender, birthday }
+			await updateProfile(data, $userStore.user.id)
+			toasts.add({
+				title: 'Success',
+				description: 'Form submitted successfully', 
+				duration: 3000, 
+				placement: 'bottom-right',
+				type: 'info',
+				theme: 'dark',
+				placement: 'bottom-right',
+				showProgress: true,
+				type: 'success',
+				onClick: () => {},
+				onRemove: () => {},
+			});
+		}
+		
+	}
+	// async function setAvatarProfile(){
+    //     let {data, err} = await getAvatar($userStore.user.id)
+    //     if(data){
+	// 		// console.log(data[0].avatar_url)
+	// 		await getImages(data[0].avatar_url).then(res=> console.log(res))
+	// 		// console.log(image)
+    //         avatar = `${data[0].avatar_url}?token=${$userStore.access_token}`
+    //     }else{
+    //         console.log(err)
+    //     }
+    // }
+    // setAvatarProfile()
 </script>
 
 <div class="page-content">
@@ -97,7 +164,7 @@
 									alt="user-profile"
 								/>
 								<div class="avatar-xs p-0 rounded-circle profile-photo-edit">
-									<Input id="profile-img-file-input" type="file" class="profile-img-file-input" />
+									<Input id="profile-img-file-input" type="file" class="profile-img-file-input"  on:change={e => handleChange(e)}/>
 									<Label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
 										<span class="avatar-title rounded-circle bg-light text-body">
 											<i class="ri-camera-fill" />
@@ -189,20 +256,6 @@
 								value="@dave_adame"
 							/>
 						</div>
-						<div class="d-flex">
-							<div class="avatar-xs d-block flex-shrink-0 me-3">
-								<span class="avatar-title rounded-circle fs-16 bg-danger">
-									<i class="ri-pinterest-fill" />
-								</span>
-							</div>
-							<Input
-								type="text"
-								class="form-control"
-								id="pinterestName"
-								placeholder="Username"
-								value="Advance Dave"
-							/>
-						</div>
 					</CardBody>
 				</Card>
 			</Col>
@@ -217,84 +270,84 @@
 									Personal Details
 								</NavLink>
 							</NavItem>
-							<NavItem>
+							<!-- <NavItem>
 								<NavLink href="{null}" on:click={() => (activeTab = 2)} active={activeTab == 2}>
 									<i class="far fa-user" />
 									Change Password
 								</NavLink>
-							</NavItem>
-							<NavItem>
+							</NavItem> -->
+							<!-- <NavItem>
 								<NavLink href="{null}" on:click={() => (activeTab = 3)} active={activeTab == 3}>
 									<i class="far fa-envelope" />
 									Experience
 								</NavLink>
-							</NavItem>
-							<NavItem>
+							</NavItem> -->
+							<!-- <NavItem>
 								<NavLink href="{null}" on:click={() => (activeTab = 4)} active={activeTab == 4}>
 									<i class="far fa-envelope" />
 									Privacy Policy
 								</NavLink>
-							</NavItem>
+							</NavItem> -->
 						</Nav>
 					</CardHeader>
 					<CardBody class="p-4">
 						<TabContent>
 							<TabPane tabId={1} class={activeTab == 1 ? 'active' : ''}>
-								<Form>
+								<form on:submit|preventDefault={updateProfiles}>
 									<Row>
 										<Col lg={6}>
 											<div class="mb-3">
 												<Label for="firstnameInput" class="form-label">First Name</Label>
-												<Input
+												<input
 													type="text"
 													class="form-control"
 													id="firstnameInput"
 													placeholder="Enter your firstname"
-													value="Dave"
 												/>
 											</div>
 										</Col>
 										<Col lg={6}>
 											<div class="mb-3">
 												<Label for="lastnameInput" class="form-label">Last Name</Label>
-												<Input
+												<input
 													type="text"
 													class="form-control"
 													id="lastnameInput"
 													placeholder="Enter your lastname"
-													value="Adame"
 												/>
+												<div class="invalid-feedback">
+													Please enter Last Name
+												</div>
 											</div>
 										</Col>
 										<Col lg={6}>
 											<div class="mb-3">
 												<Label for="phonenumberInput" class="form-label">Phone Number</Label>
-												<Input
+												<input
 													type="text"
 													class="form-control"
 													id="phonenumberInput"
-													placeholder="Enter your phone number"
-													value="+(1) 987 6543"
+													placeholder="XXX XXX XXXX"
 												/>
 											</div>
 										</Col>
 										<Col lg={6}>
 											<div class="mb-3">
 												<Label for="emailInput" class="form-label">Email Address</Label>
-												<Input
+												<input
 													type="email"
 													class="form-control"
 													id="emailInput"
 													placeholder="Enter your email"
-													value="daveadame@velzon.com"
 												/>
 											</div>
 										</Col>
 										<Col lg={12}>
 											<div class="mb-3">
-												<Label for="JoiningdatInput" class="form-label">Joining Date</Label>
+												<Label for="birthdayInput" class="form-label">Birthday</Label>
 												<Flatpickr
 													class="form-control"
+													id='birthdayInput'
 													options={{
 														dateFormat: 'd M, Y'
 													}}
@@ -303,78 +356,40 @@
 										</Col>
 										<Col lg={12}>
 											<div class="mb-3">
-												<Label for="skillsInput" class="form-label">Skills</Label>
+												<Label for="gender" class="form-label">Gender</Label>
 
 												<Select
 													class="form-select mb-3"
-													placeholder="Select your Skill"
-													items={skillOptions}
-												/>
-											</div>
-										</Col>
-										<Col lg={6}>
-											<div class="mb-3">
-												<Label for="designationInput" class="form-label">Designation</Label>
-												<Input
-													type="text"
-													class="form-control"
-													id="designationInput"
-													placeholder="Designation"
-													value="Lead Designer / Developer"
-												/>
-											</div>
-										</Col>
-										<Col lg={6}>
-											<div class="mb-3">
-												<Label for="websiteInput1" class="form-label">Website</Label>
-												<Input
-													type="text"
-													class="form-control"
-													id="websiteInput1"
-													placeholder="www.example.com"
-													value="www.velzon.com"
-												/>
-											</div>
-										</Col>
-										<Col lg={4}>
-											<div class="mb-3">
-												<Label for="cityInput" class="form-label">City</Label>
-												<Input
-													type="text"
-													class="form-control"
-													id="cityInput"
-													placeholder="City"
-													value="California"
-												/>
-											</div>
-										</Col>
-										<Col lg={4}>
-											<div class="mb-3">
-												<Label for="countryInput" class="form-label">Country</Label>
-												<Input
-													type="text"
-													class="form-control"
-													id="countryInput"
-													placeholder="Country"
-													value="United States"
-												/>
-											</div>
-										</Col>
-										<Col lg={4}>
-											<div class="mb-3">
-												<Label for="zipcodeInput" class="form-label">Zip Code</Label>
-												<Input
-													type="text"
-													class="form-control"
-													minLength="5"
-													maxLength="6"
-													id="zipcodeInput"
-													placeholder="Enter zipcode"
-													value="90011"
+													id="genderInput"
+													bind:value={selected}
+													placeholder="Gender..."
+													items={genderOptions}
 												/>
 											</div>
 										</Col>
 										<Col lg={12}>
+											<div class="mb-3">
+												<Label for="websiteInput1" class="form-label">Website</Label>
+												<input
+													type="text"
+													class="form-control"
+													id="websiteInput1"
+													placeholder="www.example.com"
+												/>
+											</div>
+										</Col>
+										<Col lg={12}>
+											<div class="mb-3">
+												<Label for="addressInput" class="form-label">Address</Label>
+												<input
+													type="text"
+													class="form-control"
+													id="addressInput"
+													placeholder="Address..."
+												/>
+											</div>
+										</Col>
+										<!-- <Col lg={12}>
 											<div class="mb-3 pb-2">
 												<Label for="exampleFormControlTextarea" class="form-label"
 													>Description</Label
@@ -386,15 +401,18 @@
 													value="Hi I'm Anna Adame, It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family."
 												/>
 											</div>
-										</Col>
+										</Col> -->
 										<Col lg={12}>
 											<div class="hstack gap-2 justify-content-end">
-												<button type="button" class="btn btn-primary">Updates</button>
+												<button type="button" on:click={() => updateProfiles()}  class="btn btn-primary">Updates</button>
 												<button type="button" class="btn btn-soft-success">Cancel</button>
 											</div>
 										</Col>
 									</Row>
-								</Form>
+									<ToastContainer let:data={data}>
+										<FlatToast {data}  />
+									</ToastContainer>
+								</form>
 							</TabPane>
 
 							<TabPane tabId={2} class={activeTab == 2 ? 'active' : ''}>
@@ -403,7 +421,7 @@
 										<Col lg={4}>
 											<div>
 												<Label for="oldpasswordInput" class="form-label">Old Password*</Label>
-												<Input
+												<input
 													type="password"
 													class="form-control"
 													id="oldpasswordInput"
@@ -517,7 +535,7 @@
 								</div>
 							</TabPane>
 
-							<TabPane tabId={3} class={activeTab == 3 ? 'active' : ''}>
+							<!-- <TabPane tabId={3} class={activeTab == 3 ? 'active' : ''}>
 								<form>
 									<div id="newlink">
 										<div id="1">
@@ -601,7 +619,7 @@
 										</div>
 									</Col>
 								</form>
-							</TabPane>
+							</TabPane> -->
 
 							<TabPane tabId={4} class={activeTab == 4 ? 'active' : ''}>
 								<div class="mb-4 pb-2">

@@ -6,18 +6,27 @@
         DropdownItem,
     } from "sveltestrap";
     import avatar1 from '../../assets/images/users/user-1.png';
-	import {userStore} from '../../lib/store/userStore'
     import {logoutService} from '../../lib/service/service'
 	import {goto} from '$app/navigation';
     import supabase from '../../lib/service/db';
+	import {url} from '../../lib/service/db'
 
 
-
+    // let store;
+    // userStore.subscribe(value => {
+	// 	store = value;
+	// });
     // userStore.set(getUser())
-    // console.log($userStore)
    
-        console.log(supabase.auth.user)
-  
+    // async function setAvatarProfile(){
+    //     let {data, err} = getAvatar(userIdStore)
+    //     if(data){
+    //         console.log(data)
+    //     }else{
+    //         console.log(err)
+    //     }
+    // }
+    // setAvatarProfile()
 	async function logout(){
 		await logoutService()
         .then(() => goto('/authenticationInner/login/auth-signin'))

@@ -42,13 +42,26 @@
 	import profilebg from '../../../../assets/images/profile-bg.jpg';
 
 	import { Swiper, SwiperSlide } from 'swiper/svelte';
-
+	import {getProfile} from '../../../../lib/service/service';
+	import {userStore} from '../../../../lib/store/userStore'
 	// Import Swiper styles
 	import 'swiper/css';
 	import 'swiper/css/pagination';
 
 	let activeTab = 1;
 	let activeTimelineTab = 1;
+	let info;
+
+	async function loadInfoUser(){
+		let {data, error} = await getProfile($userStore.user.id);
+		if(data){
+			info = data[0];
+		}else{
+			console.log(error)
+		}
+	}
+	loadInfoUser()
+	console.log(info)
 </script>
 
 <div class="page-content">
@@ -72,7 +85,7 @@
 
 				<div class="col">
 					<div class="p-2">
-						<h3 class="text-white mb-1">Anna Adame</h3>
+						<h3 class="text-white mb-1" id='fullName'>Owner & Founder</h3>
 						<p class="text-white-75">Owner & Founder</p>
 						<div class="hstack text-white-50 gap-1">
 							<div class="me-2">

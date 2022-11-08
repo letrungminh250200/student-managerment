@@ -4,7 +4,6 @@
 	import ParticlesAuth from "../ParticlesAuth.svelte";
 	import logolight from '../../../assets/images/logo-light.png'
 	import {signIn} from '../../../lib/service/service'
-	import {userStore} from '../../../lib/store/userStore'
 	import {goto} from '$app/navigation';
 	
 	async function login(){
@@ -13,14 +12,14 @@
 		
 		await signIn(email,password)
 		.then(res => {
-			(res.data.session == null)?alert("Email or password is invalid"):userStore.set(res.data.session)
-		})
-		.then(() => {
-			return goto('/')
+			if(res.data.session == null){
+				alert("Email or password is invalid")
+			}else{
+				goto('/dashboard')
+			}
 		})
 		.catch(e => console.log(e))
 	};
-	userStore.set({minh: 12456})
 	// console.log($userStore)
 	// localStorage.setItem(supabase.auth.storageKey, null)
 	// function checkUser(){
@@ -90,9 +89,9 @@
                                             placeholder="Enter email address"
                                             required
                                         />
-										<!-- <div class="invalid-feedback">
+										<div class="invalid-feedback">
                                             Please enter email
-                                        </div> -->
+                                        </div>
 									</div>
 
 									<div class="mb-3">

@@ -1,4 +1,6 @@
 import { writable } from "svelte/store";
+const userData = JSON.parse(localStorage.getItem('sb-trnsohfvgkrqzwrtqrnk-auth-token'))
+export const userStore = writable(userData)
 
-export let userStore = writable({})
+export const avatar_url = writable('')
 
