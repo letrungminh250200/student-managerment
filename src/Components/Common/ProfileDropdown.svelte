@@ -6,7 +6,7 @@
         DropdownItem,
     } from "sveltestrap";
     import avatar1 from '../../assets/images/users/user-1.png';
-    import {logoutService} from '../../lib/service/service'
+    import {logoutService} from '../../lib/service/userService'
 	import {goto} from '$app/navigation';
     import supabase from '../../lib/service/db';
 	import {url} from '../../lib/service/db'

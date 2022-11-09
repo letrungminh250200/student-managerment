@@ -42,7 +42,7 @@
 	import profilebg from '../../../../assets/images/profile-bg.jpg';
 
 	import { Swiper, SwiperSlide } from 'swiper/svelte';
-	import {getProfile} from '../../../../lib/service/service';
+	import {getProfile} from '../../../../lib/service/userService';
 	import {userStore} from '../../../../lib/store/userStore'
 	// Import Swiper styles
 	import 'swiper/css';
@@ -52,16 +52,17 @@
 	let activeTimelineTab = 1;
 	let info;
 
-	async function loadInfoUser(){
+	const loadInfoUser = async () =>{
 		let {data, error} = await getProfile($userStore.user.id);
 		if(data){
-			info = data[0];
+			localStorage.setItem('profileData', JSON.stringify(data[0]))
 		}else{
 			console.log(error)
 		}
 	}
 	loadInfoUser()
-	console.log(info)
+	const profileData = JSON.parse(localStorage.getItem('profileData'))
+	console.log(profileData)
 </script>
 
 <div class="page-content">
@@ -85,21 +86,20 @@
 
 				<div class="col">
 					<div class="p-2">
-						<h3 class="text-white mb-1" id='fullName'>Owner & Founder</h3>
+						<h3 class="text-white mb-1" id='fullName'>{profileData.full_name}</h3>
 						<p class="text-white-75">Owner & Founder</p>
 						<div class="hstack text-white-50 gap-1">
 							<div class="me-2">
-								<i class="ri-map-pin-user-line me-1 text-white-75 fs-16 align-middle" />California,
-								United States
+								<i class="ri-map-pin-user-line me-1 text-white-75 fs-16 align-middle" />{profileData.address}
 							</div>
-							<div>
+							<!-- <div>
 								<i class="ri-building-line me-1 text-white-75 fs-16 align-middle" />Themesbrand
-							</div>
+							</div> -->
 						</div>
 					</div>
 				</div>
 
-				<div class="col-12 col-lg-auto order-last order-lg-0">
+				<!-- <div class="col-12 col-lg-auto order-last order-lg-0">
 					<div class="row text text-white-50 text-center">
 						<Col lg={6} class="col-4">
 							<div class="p-2">
@@ -114,7 +114,7 @@
 							</div>
 						</Col>
 					</div>
-				</div>
+				</div> -->
 			</Row>
 		</div>
 
@@ -189,23 +189,23 @@
 													<tbody>
 														<tr>
 															<th class="ps-0" scope="row">Full Name :</th>
-															<td class="text-muted">Anna Adame</td>
+															<td class="text-muted">{profileData.full_name}</td>
 														</tr>
 														<tr>
 															<th class="ps-0" scope="row">Mobile :</th>
-															<td class="text-muted">+(1) 987 6543</td>
+															<td class="text-muted">{profileData.phone}</td>
 														</tr>
 														<tr>
 															<th class="ps-0" scope="row">E-mail :</th>
-															<td class="text-muted">daveadame@velzon.com</td>
+															<td class="text-muted">{profileData.email}</td>
 														</tr>
 														<tr>
 															<th class="ps-0" scope="row">Location :</th>
-															<td class="text-muted">California, United States </td>
+															<td class="text-muted">{profileData.address} </td>
 														</tr>
 														<tr>
-															<th class="ps-0" scope="row">Joining Date</th>
-															<td class="text-muted">24 Nov 2021</td>
+															<th class="ps-0" scope="row">Birthday</th>
+															<td class="text-muted">{profileData.birthday}</td>
 														</tr>
 													</tbody>
 												</table>

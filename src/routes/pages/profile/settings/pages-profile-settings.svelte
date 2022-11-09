@@ -23,15 +23,17 @@
 	import Select from 'svelte-select';
 	import profilebg from '../../../../assets/images/profile-bg.jpg'
 	import avatar1 from '../../../../assets/images/users/user-1.png'
-	import { updateProfile, uploadAvatar, getAvatar, getImages, getUser} from '../../../../lib/service/service'
+	import { updateProfile, uploadAvatar, getAvatar, getImages, getUser} from '../../../../lib/service/userService'
 	import {userStore} from '../../../../lib/store/userStore'
 	import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
 	import {url} from '../../../../lib/service/db'
+    import { goto } from '$app/navigation';
 
 	
 	let activeTab = 1;
 	let selected;
 	let avatar;
+	
 	const genderOptions = [
 		{ value: 0, label: 'Female' },
 		{ value: 1, label: 'Male' },
@@ -65,6 +67,9 @@
 	async function handleChange(e){
 		let {data, error} = await uploadAvatar(e.target.files[0])
 		if(data){
+			if(data.full_name == null){
+				goto('/pages/profile/settings/pages-profile-settings')
+			}
 			// await updateProfile({avatar_url: `${url}/storage/v1/object/sign/avatars/${data.path}`}, $userStore.user.id)
 			await updateProfile({avatar_url: data.path}, $userStore.user.id)
 
@@ -78,7 +83,8 @@
 		let full_name = `${lastName} ${fistName}`;
 		let phone = document.getElementById('phonenumberInput').value;
 		let email = document.getElementById('emailInput').value;
-		let gender = selected.value
+		let gender = selected.value;
+		gender = 1;
 		let website = document.getElementById('websiteInput1').value;
 		let address = document.getElementById('addressInput').value;
 		let birthday = document.getElementById('birthdayInput').value;
@@ -90,30 +96,41 @@
 				placement: 'bottom-right',
 				type: 'info',
 				placement: 'bottom-right',
-						showProgress: true,
+				showProgress: true,
 				type: 'error',
 				theme: 'dark',
-				onClick: () => {},
-				onRemove: () => {},
 			});
 		}else{
 			let data = { full_name, website, email, phone, address, gender, birthday }
-			await updateProfile(data, $userStore.user.id)
-			toasts.add({
-				title: 'Success',
-				description: 'Form submitted successfully', 
-				duration: 3000, 
-				placement: 'bottom-right',
-				type: 'info',
-				theme: 'dark',
-				placement: 'bottom-right',
-				showProgress: true,
-				type: 'success',
-				onClick: () => {},
-				onRemove: () => {},
-			});
-		}
-		
+				await updateProfile(data, $userStore.user.id)
+				.then(() =>{
+					toasts.add({
+					title: 'Success',
+					description: 'Form submitted successfully', 
+					duration: 3000, 
+					placement: 'bottom-right',
+					type: 'info',
+					theme: 'dark',
+					placement: 'bottom-right',
+					showProgress: true,
+					type: 'success',
+				});
+				goto('/pages/profile/simple/simplepage')
+				})
+				.catch(e =>{
+					toasts.add({
+						title: 'Failed',
+						description: e.message, 
+						duration: 3000, 
+						placement: 'bottom-right',
+						type: 'info',
+						placement: 'bottom-right',
+						showProgress: true,
+						type: 'error',
+						theme: 'dark',
+					});
+				})
+			}
 	}
 	// async function setAvatarProfile(){
     //     let {data, err} = await getAvatar($userStore.user.id)

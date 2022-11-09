@@ -3,7 +3,7 @@
 	import Link from "svelte-link";
 	import ParticlesAuth from "../ParticlesAuth.svelte";
 	import logolight from '../../../assets/images/logo-light.png'
-	import {signIn} from '../../../lib/service/service'
+	import {signIn} from '../../../lib/service/userService'
 	import {goto} from '$app/navigation';
 	
 	async function login(){

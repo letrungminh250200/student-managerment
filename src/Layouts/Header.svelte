@@ -92,7 +92,7 @@
 			<div class="d-flex">
 				<!-- LOGO -->
 				<div class="navbar-brand-box horizontal-logo">
-					<a href="dashboard" class="logo logo-dark">
+					<a href="/dashboard" class="logo logo-dark">
 						<span class="logo-sm">
 							<img
 								src={logosm}
@@ -109,7 +109,7 @@
 						</span>
 					</a>
 
-					<a href="dashboard" class="logo logo-light">
+					<a href="/dashboard" class="logo logo-light">
 						<span class="logo-sm">
 							<img
 								src={logosm}

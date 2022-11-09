@@ -22,6 +22,7 @@
 	} from 'sveltestrap';
 	import BreadCrumb from '../../Components/Common/BreadCrumb.svelte';
 	import { html } from 'gridjs';
+	import {addUserRef} from '../../lib/service/userRefService'
 
 	const data = [
 		[
@@ -129,6 +130,7 @@
 			'Qatar'
 		]
 	];
+	const post = async () => await addUserRef()
 
 	let open = false;
 	const toggle = () => (open = !open);
@@ -150,22 +152,23 @@
 									{data}
 									columns={[
 										'ID',
-										'Name',
+										'Full Name',
 										{
 											name: 'Email',
 											width: '180px',
 											formatter: (cell, row) => html(`<a href="javascript://"> ${cell} </a>`)
 										},
 										{
-											name: 'Position',
+											name: 'Phone Number',
 											width: '228px',
 										},
-										'Company',
-										'Country',
+										'Gender',
+										'Address',
+										'Birtday',
 										{
 											name: '',
 											sortable: false,
-											width: '120px',
+											width: '70px',
 											formatter: (cell, row) => {
 												return h('button', {
 													className: 'btn btn-primary text-white ',
@@ -177,12 +180,12 @@
 										{
 											name: '',
 											sortable: false,
-											width: '120px',
+											width: '80px',
 											className: 'le-trung-minh',
 											formatter: (cell, row) => {
 												return h('button', {
 													className: 'btn btn-primary text-white ',
-													onClick: () => toggle()
+													onClick: () => post()
 												}, 'Delete');
 											}
 											

@@ -3,7 +3,7 @@
     import { Card, CardBody, Col, Container, Row,Label } from "sveltestrap";
     import ParticlesAuth from "../ParticlesAuth.svelte";
     // import supabase from '../../../lib/db';
-    import {signUp} from '../../../lib/service/service'
+    import {signUp} from '../../../lib/service/userService'
 	import {goto} from '$app/navigation';
 
     //import images
