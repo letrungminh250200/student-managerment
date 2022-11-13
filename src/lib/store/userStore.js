@@ -4,3 +4,5 @@ export const userStore = writable(userData)
 
 export const avatar_url = writable('')
 
+export const userProfileRef = writable([])
+

@@ -62,7 +62,6 @@
 	}
 	loadInfoUser()
 	const profileData = JSON.parse(localStorage.getItem('profileData'))
-	console.log(profileData)
 </script>
 
 <div class="page-content">

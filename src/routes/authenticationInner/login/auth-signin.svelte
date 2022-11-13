@@ -6,10 +6,10 @@
 	import {signIn} from '../../../lib/service/userService'
 	import {goto} from '$app/navigation';
 	
-	async function login(){
-		let email = document.getElementById('useremail').value;
-		let password = document.getElementById('password-input').value;
-		
+	async function login(e){
+		const formdata = new FormData(e.target);
+		let email = formdata.get('email');
+		let password = formdata.get('password');
 		await signIn(email,password)
 		.then(res => {
 			if(res.data.session == null){
@@ -86,6 +86,7 @@
                                             type="email"
                                             class="form-control"
                                             id="useremail"
+											name="email"
                                             placeholder="Enter email address"
                                             required
                                         />
@@ -112,6 +113,8 @@
 												class="form-control pe-5"
 												placeholder="Enter password"
 												id="password-input"
+												name="password"
+												required
 											/>
 											<button
 												class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"

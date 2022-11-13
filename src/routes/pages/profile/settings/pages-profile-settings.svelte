@@ -31,7 +31,7 @@
 
 	
 	let activeTab = 1;
-	let selected;
+	let selected = "1";
 	let avatar;
 	
 	const genderOptions = [
@@ -77,18 +77,19 @@
 			console.log(error)
 		}
 	}
-	async function updateProfiles(){
-		let fistName = document.getElementById('firstnameInput').value;
-		let lastName = document.getElementById('lastnameInput').value;
-		let full_name = `${lastName} ${fistName}`;
-		let phone = document.getElementById('phonenumberInput').value;
-		let email = document.getElementById('emailInput').value;
-		let gender = selected.value;
-		gender = 1;
-		let website = document.getElementById('websiteInput1').value;
-		let address = document.getElementById('addressInput').value;
-		let birthday = document.getElementById('birthdayInput').value;
-		if(fistName == '' || fistName == '' || email == '' || phone == '' || website == '' || address == ''){
+	async function updateProfiles(e){
+		const formdata = new FormData(e.target);
+		let full_name = `${formdata.get('lastName')} ${formdata.get('fistName')}`;
+		let data = { 
+				full_name: full_name, 
+				website: formdata.get('website'), 
+				email: formdata.get('email'), 
+				phone: formdata.get('phone'), 
+				address: formdata.get('address'), 
+				gender: selected.value, 
+				birthday: formdata.get('birthday') 
+			}
+		if(formdata.get('fistName') == '' || formdata.get('lastName') == '' || data.email == '' || data.phone == '' || data.website == '' || data.address == ''){
 			toasts.add({
 				title: 'Failed',
 				description: 'please fill out this field.', 
@@ -101,7 +102,7 @@
 				theme: 'dark',
 			});
 		}else{
-			let data = { full_name, website, email, phone, address, gender, birthday }
+			
 				await updateProfile(data, $userStore.user.id)
 				.then(() =>{
 					toasts.add({
@@ -319,7 +320,9 @@
 													type="text"
 													class="form-control"
 													id="firstnameInput"
+													name="fistName"
 													placeholder="Enter your firstname"
+													required
 												/>
 											</div>
 										</Col>
@@ -330,7 +333,9 @@
 													type="text"
 													class="form-control"
 													id="lastnameInput"
+													name="lastName"
 													placeholder="Enter your lastname"
+													required
 												/>
 												<div class="invalid-feedback">
 													Please enter Last Name
@@ -344,7 +349,9 @@
 													type="text"
 													class="form-control"
 													id="phonenumberInput"
+													name="phone"
 													placeholder="XXX XXX XXXX"
+													required
 												/>
 											</div>
 										</Col>
@@ -355,7 +362,9 @@
 													type="email"
 													class="form-control"
 													id="emailInput"
+													name="email"
 													placeholder="Enter your email"
+													required
 												/>
 											</div>
 										</Col>
@@ -365,6 +374,8 @@
 												<Flatpickr
 													class="form-control"
 													id='birthdayInput'
+													name="birthday"
+													required
 													options={{
 														dateFormat: 'd M, Y'
 													}}
@@ -391,6 +402,7 @@
 													type="text"
 													class="form-control"
 													id="websiteInput1"
+													name="website"
 													placeholder="www.example.com"
 												/>
 											</div>
@@ -402,7 +414,9 @@
 													type="text"
 													class="form-control"
 													id="addressInput"
+													name="address"
 													placeholder="Address..."
+													required
 												/>
 											</div>
 										</Col>
@@ -421,7 +435,7 @@
 										</Col> -->
 										<Col lg={12}>
 											<div class="hstack gap-2 justify-content-end">
-												<button type="button" on:click={() => updateProfiles()}  class="btn btn-primary">Updates</button>
+												<button type="submit"  class="btn btn-primary">Updates</button>
 												<button type="button" class="btn btn-soft-success">Cancel</button>
 											</div>
 										</Col>
