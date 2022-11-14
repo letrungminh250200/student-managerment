@@ -6,18 +6,10 @@
         DropdownItem,
     } from "sveltestrap";
     import avatar1 from '../../assets/images/users/user-1.png';
-    import {logoutService} from '../../lib/service/userService'
+    import {logoutService,getProfile} from '../../lib/service/userService'
 	import {goto} from '$app/navigation';
-    import supabase from '../../lib/service/db';
-	import {url} from '../../lib/service/db'
+    import {userDataStore, profile} from '../../lib/store/userStore'
 
-
-    // let store;
-    // userStore.subscribe(value => {
-	// 	store = value;
-	// });
-    // userStore.set(getUser())
-   
     // async function setAvatarProfile(){
     //     let {data, err} = getAvatar(userIdStore)
     //     if(data){
@@ -27,9 +19,34 @@
     //     }
     // }
     // setAvatarProfile()
+    // function checkUser(){
+	// 	if($userDataStore == null){
+	// 		goto('/authenticationInner/login/auth-signin')
+	// 	}
+	// }
+	// checkUser()
+    // const loadInfoUser = async () =>{
+    //         let {data, error} = await getProfile($userDataStore.id);
+    //         if(data){
+    //             profile.set(data[0])
+    //             // localStorage.setItem('profileData', JSON.stringify(data[0]))
+    //         }else{
+    //             console.log(error)
+    //         }
+	// }
+	// loadInfoUser()
+    // const getName = () =>{
+    //     if($profile){
+    //         name = $profile.full_name.split(' ')
+    //         console.log(name[name.length - 1])
+    //     }
+    // }
+    // getName()
+    console.log($userDataStore)
 	async function logout(){
 		await logoutService()
         .then(() => goto('/authenticationInner/login/auth-signin'))
+        .then(() => userDataStore.update((data) => data = null ))
         .catch(e => console.log(e))
 	};
     
@@ -51,18 +68,18 @@
             <span class="text-start ms-xl-2">
                 <span
                     class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"
-                    >Anna Adame</span
+                    >{$userDataStore.email}</span
                 >
                 <span
                     class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text"
-                    >Founder</span
+                    >Student</span
                 >
             </span>
         </span>
     </DropdownToggle>
     <DropdownMenu class="dropdown-menu-end" end>
         <!-- item-->
-        <h6 class="dropdown-header">Welcome Anna!</h6>
+        <h6 class="dropdown-header">Welcome {$userDataStore.email}!</h6>
         <DropdownItem href="/pages/profile/simple/simplepage"
             ><i
                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"
@@ -75,7 +92,7 @@
             <span class="align-middle">Balance : <b>$5971.67</b></span
             ></DropdownItem
         >
-        <DropdownItem href="/pages/profile/simple/simplepage"
+        <DropdownItem href="/pages/profile/simple/simplepage" 
             ><span class="badge bg-soft-success text-success mt-1 float-end"
                 >New</span
             ><i
@@ -85,9 +102,8 @@
         <DropdownItem 
             on:click={() => logout()}
             ><i class="mdi mdi-logout text-muted fs-16 align-middle me-1" />
-            <span class="align-middle" data-key="t-logout">Logout</span
-
-            ></DropdownItem
+            <span class="align-middle" data-key="t-logout">Logout</span>
+        </DropdownItem
         >
     </DropdownMenu>
 </Dropdown>

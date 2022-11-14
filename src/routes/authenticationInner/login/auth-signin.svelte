@@ -5,6 +5,7 @@
 	import logolight from '../../../assets/images/logo-light.png'
 	import {signIn} from '../../../lib/service/userService'
 	import {goto} from '$app/navigation';
+    import {userDataStore} from '../../../lib/store/userStore'
 	
 	async function login(e){
 		const formdata = new FormData(e.target);
@@ -20,20 +21,15 @@
 		})
 		.catch(e => console.log(e))
 	};
-	// console.log($userStore)
-	// localStorage.setItem(supabase.auth.storageKey, null)
-	// function checkUser(){
-	// 	setTimeout(() =>{
-	// 		const local = localStorage.getItem(supabase.auth.storageKey) ?? []
-	// 		if(local){
-	// 		window.location.href= '/'
-	// 	}else{
-	// 		return null
-	// 	}
-	// 	const {user} = supabase.auth.user()
-	// 	},100)
-	// }
-	// checkUser()
+	
+	function checkUser(){
+		if($userDataStore){
+			goto('/dashboard')
+		}else{
+			return null
+		}
+	}
+	checkUser()
 </script>
 
 <svelte:head>

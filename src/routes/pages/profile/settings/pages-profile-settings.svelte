@@ -24,7 +24,7 @@
 	import profilebg from '../../../../assets/images/profile-bg.jpg'
 	import avatar1 from '../../../../assets/images/users/user-1.png'
 	import { updateProfile, uploadAvatar, getAvatar, getImages, getUser} from '../../../../lib/service/userService'
-	import {userStore} from '../../../../lib/store/userStore'
+	import {userDataStore} from '../../../../lib/store/userStore'
 	import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
 	import {url} from '../../../../lib/service/db'
     import { goto } from '$app/navigation';
@@ -33,11 +33,9 @@
 	let activeTab = 1;
 	let selected = "1";
 	let avatar;
-	
 	const genderOptions = [
 		{ value: 0, label: 'Female' },
 		{ value: 1, label: 'Male' },
-		
 	];
 	const selectYears = [
 		{ value: 'Select years', label: 'Select years' },
@@ -64,14 +62,15 @@
 		{ value: '2021', label: '2021' },
 		{ value: '2022', label: '2022' }
 	];
+	const profileData = JSON.parse(localStorage.getItem('profileData'))
+	console.log($userDataStore.id)
 	async function handleChange(e){
 		let {data, error} = await uploadAvatar(e.target.files[0])
 		if(data){
 			if(data.full_name == null){
 				goto('/pages/profile/settings/pages-profile-settings')
 			}
-			// await updateProfile({avatar_url: `${url}/storage/v1/object/sign/avatars/${data.path}`}, $userStore.user.id)
-			await updateProfile({avatar_url: data.path}, $userStore.user.id)
+			await updateProfile({avatar_url: data.path}, $userDataStore.id)
 
 		}else{
 			console.log(error)
@@ -79,9 +78,8 @@
 	}
 	async function updateProfiles(e){
 		const formdata = new FormData(e.target);
-		let full_name = `${formdata.get('lastName')} ${formdata.get('fistName')}`;
 		let data = { 
-				full_name: full_name, 
+				full_name: formdata.get('fullname'),
 				website: formdata.get('website'), 
 				email: formdata.get('email'), 
 				phone: formdata.get('phone'), 
@@ -102,36 +100,35 @@
 				theme: 'dark',
 			});
 		}else{
-			
-				await updateProfile(data, $userStore.user.id)
-				.then(() =>{
-					toasts.add({
-					title: 'Success',
-					description: 'Form submitted successfully', 
+			await updateProfile(data, $userDataStore.id)
+			.then(() =>{
+				toasts.add({
+				title: 'Success',
+				description: 'Form submitted successfully', 
+				duration: 3000, 
+				placement: 'bottom-right',
+				type: 'info',
+				theme: 'dark',
+				placement: 'bottom-right',
+				showProgress: true,
+				type: 'success',
+			});
+			goto('/pages/profile/simple/simplepage')
+			})
+			.catch(e =>{
+				toasts.add({
+					title: 'Failed',
+					description: e.message, 
 					duration: 3000, 
 					placement: 'bottom-right',
 					type: 'info',
-					theme: 'dark',
 					placement: 'bottom-right',
 					showProgress: true,
-					type: 'success',
+					type: 'error',
+					theme: 'dark',
 				});
-				goto('/pages/profile/simple/simplepage')
-				})
-				.catch(e =>{
-					toasts.add({
-						title: 'Failed',
-						description: e.message, 
-						duration: 3000, 
-						placement: 'bottom-right',
-						type: 'info',
-						placement: 'bottom-right',
-						showProgress: true,
-						type: 'error',
-						theme: 'dark',
-					});
-				})
-			}
+			})
+		}
 	}
 	// async function setAvatarProfile(){
     //     let {data, err} = await getAvatar($userStore.user.id)
@@ -313,7 +310,7 @@
 							<TabPane tabId={1} class={activeTab == 1 ? 'active' : ''}>
 								<form on:submit|preventDefault={updateProfiles}>
 									<Row>
-										<Col lg={6}>
+										<!-- <Col lg={6}>
 											<div class="mb-3">
 												<Label for="firstnameInput" class="form-label">First Name</Label>
 												<input
@@ -325,15 +322,16 @@
 													required
 												/>
 											</div>
-										</Col>
-										<Col lg={6}>
+										</Col> -->
+										<Col lg={12}>
 											<div class="mb-3">
-												<Label for="lastnameInput" class="form-label">Last Name</Label>
+												<Label for="lastnameInput" class="form-label">Full Name</Label>
 												<input
 													type="text"
 													class="form-control"
+													bind:value={profileData.full_name}
 													id="lastnameInput"
-													name="lastName"
+													name="fullname"
 													placeholder="Enter your lastname"
 													required
 												/>
@@ -348,6 +346,7 @@
 												<input
 													type="text"
 													class="form-control"
+													bind:value={profileData.phone}
 													id="phonenumberInput"
 													name="phone"
 													placeholder="XXX XXX XXXX"
@@ -361,6 +360,7 @@
 												<input
 													type="email"
 													class="form-control"
+													bind:value={profileData.email}
 													id="emailInput"
 													name="email"
 													placeholder="Enter your email"
@@ -373,6 +373,7 @@
 												<Label for="birthdayInput" class="form-label">Birthday</Label>
 												<Flatpickr
 													class="form-control"
+													bind:value={profileData.birthday}
 													id='birthdayInput'
 													name="birthday"
 													required
@@ -401,6 +402,7 @@
 												<input
 													type="text"
 													class="form-control"
+													bind:value={profileData.website}
 													id="websiteInput1"
 													name="website"
 													placeholder="www.example.com"
@@ -413,6 +415,7 @@
 												<input
 													type="text"
 													class="form-control"
+													bind:value={profileData.address}
 													id="addressInput"
 													name="address"
 													placeholder="Address..."

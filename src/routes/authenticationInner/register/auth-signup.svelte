@@ -5,6 +5,7 @@
     // import supabase from '../../../lib/db';
     import {signUp} from '../../../lib/service/userService'
 	import {goto} from '$app/navigation';
+    import {userDataStore} from '../../../lib/store/userStore'
 
     //import images
     import logoLight from "../../../assets/images/logo-light.png";
@@ -17,15 +18,14 @@
         .then(() => goto('/authenticationInner/successmessage/auth-success-msg-basic'))
         .catch(err => alert(err.message))
 	}
-    // function checkUser(){
-	// 	const local = localStorage.getItem('sb-trnsohfvgkrqzwrtqrnk-auth-token') ?? []
-	// 	if(local){
-	// 		window.location.href= '/'
-	// 	}else{
-	// 		return null
-	// 	}
-	// }
-	// checkUser()
+    function checkUser(){
+		if($userDataStore){
+			goto('/dashboard')
+		}else{
+			return null
+		}
+	}
+	checkUser()
 </script>
 
 <svelte:head>

@@ -43,7 +43,7 @@
 
 	import { Swiper, SwiperSlide } from 'swiper/svelte';
 	import {getProfile} from '../../../../lib/service/userService';
-	import {userStore} from '../../../../lib/store/userStore'
+	import {userDataStore} from '../../../../lib/store/userStore'
 	// Import Swiper styles
 	import 'swiper/css';
 	import 'swiper/css/pagination';
@@ -51,9 +51,8 @@
 	let activeTab = 1;
 	let activeTimelineTab = 1;
 	let info;
-
 	const loadInfoUser = async () =>{
-		let {data, error} = await getProfile($userStore.user.id);
+		let {data, error} = await getProfile($userDataStore.id);
 		if(data){
 			localStorage.setItem('profileData', JSON.stringify(data[0]))
 		}else{
@@ -97,23 +96,6 @@
 						</div>
 					</div>
 				</div>
-
-				<!-- <div class="col-12 col-lg-auto order-last order-lg-0">
-					<div class="row text text-white-50 text-center">
-						<Col lg={6} class="col-4">
-							<div class="p-2">
-								<h4 class="text-white mb-1">24.3K</h4>
-								<p class="fs-15 mb-0">Followers</p>
-							</div>
-						</Col>
-						<Col lg={6} class="col-4">
-							<div class="p-2">
-								<h4 class="text-white mb-1">1.3K</h4>
-								<p class="fs-15 mb-0">Following</p>
-							</div>
-						</Col>
-					</div>
-				</div> -->
 			</Row>
 		</div>
 
