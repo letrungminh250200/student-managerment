@@ -28,11 +28,12 @@
 	import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
 	import {url} from '../../../../lib/service/db'
     import { goto } from '$app/navigation';
-
+	import {writable} from "svelte/store";
 	
+
 	let activeTab = 1;
 	let selected = "1";
-	let avatar;
+	const avatar = writable('');
 	const genderOptions = [
 		{ value: 0, label: 'Female' },
 		{ value: 1, label: 'Male' },
@@ -63,16 +64,34 @@
 		{ value: '2022', label: '2022' }
 	];
 	const profileData = JSON.parse(localStorage.getItem('profileData'))
-	console.log($userDataStore.id)
 	async function handleChange(e){
 		let {data, error} = await uploadAvatar(e.target.files[0])
 		if(data){
-			if(data.full_name == null){
-				goto('/pages/profile/settings/pages-profile-settings')
-			}
-			await updateProfile({avatar_url: data.path}, $userDataStore.id)
-
+			await updateProfile({avatar_url: `${url}/storage/v1/object/public/avatars/${data.path}`}, $userDataStore.id)
+			toasts.add({
+				title: 'Success',
+				description: 'Upload image successfully', 
+				duration: 3000, 
+				placement: 'bottom-right',
+				type: 'info',
+				placement: 'bottom-right',
+				showProgress: true,
+				type: 'success',
+				theme: 'dark',
+			});
+			goto('/pages/profile/simple/simplepage')
 		}else{
+			toasts.add({
+				title: 'Failed',
+				description: 'Upload image failed', 
+				duration: 3000, 
+				placement: 'bottom-right',
+				type: 'info',
+				placement: 'bottom-right',
+				showProgress: true,
+				type: 'error',
+				theme: 'dark',
+			});
 			console.log(error)
 		}
 	}
@@ -130,18 +149,17 @@
 			})
 		}
 	}
-	// async function setAvatarProfile(){
-    //     let {data, err} = await getAvatar($userStore.user.id)
-    //     if(data){
-	// 		// console.log(data[0].avatar_url)
-	// 		await getImages(data[0].avatar_url).then(res=> console.log(res))
-	// 		// console.log(image)
-    //         avatar = `${data[0].avatar_url}?token=${$userStore.access_token}`
-    //     }else{
-    //         console.log(err)
-    //     }
-    // }
-    // setAvatarProfile()
+	async function setAvatarProfile(){
+		if($userDataStore){
+			let {data, err} = await getAvatar($userDataStore.id)
+			if(data){
+				avatar.set(data[0].avatar_url)
+			}else{
+				console.log(err)
+			}
+		}
+    }
+    setAvatarProfile()
 </script>
 
 <div class="page-content">
@@ -149,7 +167,7 @@
 		<div class="position-relative mx-n4 mt-n4">
 			<div class="profile-wid-bg profile-setting-img">
 				<img src={profilebg} class="profile-wid-img" alt="" />
-				<div class="overlay-content">
+				<!-- <div class="overlay-content">
 					<div class="text-end p-3">
 						<div class="p-0 ms-auto rounded-circle profile-photo-edit">
 							<Input
@@ -164,7 +182,7 @@
 							</Label>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<Row>
@@ -173,11 +191,13 @@
 					<CardBody class="p-4">
 						<div class="text-center">
 							<div class="profile-user position-relative d-inline-block mx-auto  mb-4">
-								<img
-									src={avatar1}
-									class="rounded-circle avatar-xl img-thumbnail user-profile-image"
-									alt="user-profile"
-								/>
+								{#await $avatar then value}
+									<img
+										src={value ? value : avatar1}
+										class="rounded-circle avatar-xl img-thumbnail user-profile-image"
+										alt="user-profile"
+									/>
+								{/await}
 								<div class="avatar-xs p-0 rounded-circle profile-photo-edit">
 									<Input id="profile-img-file-input" type="file" class="profile-img-file-input"  on:change={e => handleChange(e)}/>
 									<Label for="profile-img-file-input" class="profile-photo-edit avatar-xs">
@@ -310,19 +330,6 @@
 							<TabPane tabId={1} class={activeTab == 1 ? 'active' : ''}>
 								<form on:submit|preventDefault={updateProfiles}>
 									<Row>
-										<!-- <Col lg={6}>
-											<div class="mb-3">
-												<Label for="firstnameInput" class="form-label">First Name</Label>
-												<input
-													type="text"
-													class="form-control"
-													id="firstnameInput"
-													name="fistName"
-													placeholder="Enter your firstname"
-													required
-												/>
-											</div>
-										</Col> -->
 										<Col lg={12}>
 											<div class="mb-3">
 												<Label for="lastnameInput" class="form-label">Full Name</Label>

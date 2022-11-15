@@ -25,10 +25,12 @@
 	import BreadCrumb from '../../Components/Common/BreadCrumb.svelte';
 	import { html } from 'gridjs';
 	import {userDataStore} from '../../lib/store/userStore';
-	import {getUserRef, updateUserRef , addUserRef, deleteUserRef} from '../../lib/service/userRefService';
+	import {getUserRef, updateUserRef , addUserRef, deleteUserRef, getUserRefByUser} from '../../lib/service/userRefService';
 	import {goto} from '$app/navigation';
 	import { toasts, ToastContainer, FlatToast }  from "svelte-toasts";
 	import { writable} from "svelte/store";
+
+
 
 
 	// const data = [
@@ -262,20 +264,13 @@
 		}
 	}
 	const getAllUserRef = async () => {
-		const {data, err} = await getUserRef();
-		dataCustomer.set(data.map((res, index) => ([
-				res.id,
-				res.full_name, 
-				res.email, 
-				res.phone, 
-				res.gender, 
-				res.address, 
-				res.birthday,
-			])))
+		if($userDataStore){
+			const {data, err} = await getUserRefByUser($userDataStore.id)
+			dataCustomer.set(data.map((res, index) => ([index + 1,res.id,res.full_name, res.email, res.phone, res.gender, res.address, res.birthday,])))
+		}
 	}
 	getAllUserRef()
 	const showModalAdd = () => {
-		console.log($dataCustomer)
 		checkFormEdit = false;
 		selected = '1'
 		toggle()
@@ -323,9 +318,9 @@
 		dataModal.birthday = birthday;
 	}
 	const showModalEdit = (data) => {
-		formValue(data[1].data, data[2].data, data[3].data, data[5].data, data[6].data)
-		idCus =  data[0].data
-		selected = data[4].data
+		formValue(data[2].data, data[3].data, data[4].data, data[6].data, data[7].data)
+		idCus =  data[1].data
+		selected = data[5].data
 		checkFormEdit = true;
 		toggle()
 	}
@@ -350,6 +345,7 @@
 									<Grid
 										{data}
 										columns={[
+											'STT',
 											'ID',
 											'Full Name',
 											{
@@ -387,8 +383,7 @@
 												formatter: (cell, row) => {
 													return h('button', {
 														className: 'btn btn-primary text-white ',
-														// onClick: () => deleteCustomer(row._cells[0].data)
-														onClick: () => getIdDelete(row._cells[0].data)
+														onClick: () => getIdDelete(row._cells[1].data)
 													}, 'Delete');
 												}
 											},

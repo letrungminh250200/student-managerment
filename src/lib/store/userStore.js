@@ -1,5 +1,5 @@
 import { writable, readable } from "svelte/store";
-import {getUser, getProfile} from "../service/userService"
+import {getUser, getProfile, getAvatar} from "../service/userService"
 // const userData = JSON.parse(localStorage.getItem('sb-trnsohfvgkrqzwrtqrnk-auth-token'))
 // export const userStore = writable(userData)
 export const userDataStore = writable(null)
@@ -9,8 +9,6 @@ const user = async () => {
 }
 user();
 export const profile = writable({})
-
-
 
 
 

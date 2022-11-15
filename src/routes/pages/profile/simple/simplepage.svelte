@@ -31,7 +31,7 @@
 	import img7 from '../../../../assets/images/small/img-7.jpg';
 	import img9 from '../../../../assets/images/small/img-9.jpg';
 
-	import avatar1 from '../../../../assets/images/users/avatar-1.jpg';
+	import avatar1 from '../../../../assets/images/users/user-1.png';
 	import avatar2 from '../../../../assets/images/users/avatar-2.jpg';
 	import avatar3 from '../../../../assets/images/users/avatar-3.jpg';
 	import avatar4 from '../../../../assets/images/users/avatar-4.jpg';
@@ -40,27 +40,41 @@
 	import avatar7 from '../../../../assets/images/users/avatar-7.jpg';
 	import avatar8 from '../../../../assets/images/users/avatar-8.jpg';
 	import profilebg from '../../../../assets/images/profile-bg.jpg';
-
+     
 	import { Swiper, SwiperSlide } from 'swiper/svelte';
-	import {getProfile} from '../../../../lib/service/userService';
+	import {getProfile, getAvatar} from '../../../../lib/service/userService';
 	import {userDataStore} from '../../../../lib/store/userStore'
+	import {writable} from "svelte/store";
 	// Import Swiper styles
 	import 'swiper/css';
 	import 'swiper/css/pagination';
+	const avatar = writable('');
 
 	let activeTab = 1;
 	let activeTimelineTab = 1;
-	let info;
 	const loadInfoUser = async () =>{
-		let {data, error} = await getProfile($userDataStore.id);
-		if(data){
-			localStorage.setItem('profileData', JSON.stringify(data[0]))
-		}else{
-			console.log(error)
+		if($userDataStore){
+			let {data, error} = await getProfile($userDataStore.id);
+			if(data){
+				localStorage.setItem('profileData', JSON.stringify(data[0]))
+			}else{
+				console.log(error)
+			}
 		}
 	}
 	loadInfoUser()
 	const profileData = JSON.parse(localStorage.getItem('profileData'))
+	async function setAvatarProfile(){
+		if($userDataStore){
+			let {data, err} = await getAvatar($userDataStore.id)
+			if(data){
+				avatar.set(data[0].avatar_url)
+			}else{
+				console.log(err)
+			}
+		}
+    }
+    setAvatarProfile()
 </script>
 
 <div class="page-content">
@@ -74,11 +88,14 @@
 			<Row class="g-4">
 				<div class="col-auto">
 					<div class="avatar-lg">
-						<img
-							src={avatar1}
-							alt="user-img"
-							class="img-thumbnail rounded-circle"
-						/>
+						{#await $avatar then value}
+							<img
+								src={value ? value : avatar1}
+								alt="user-img"
+								class="img-thumbnail rounded-circle h-100 w-100"
+								style="object-fit: cover;"
+							/>
+						{/await}
 					</div>
 				</div>
 
